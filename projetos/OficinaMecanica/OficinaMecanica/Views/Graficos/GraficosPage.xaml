@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Graficos.GraficosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Gráficos e Estatísticas">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- Título -->
+            <Label Text="Dashboard — Visão Geral"
+                   FontAttributes="Bold"
+                   FontSize="20"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <!-- Cards de resumo -->
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto"
+                  ColumnSpacing="12" RowSpacing="12">
+
+                <!-- Total de OS -->
+                <Border Grid.Row="0" Grid.Column="0"
+                        BackgroundColor="#2e86c1"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Total de OS" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelTotalOS" Text="0"
+                               FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="ordens cadastradas" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Faturamento -->
+                <Border Grid.Row="0" Grid.Column="1"
+                        BackgroundColor="#27ae60"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Faturamento Total" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelFaturamento" Text="R$ 0"
+                               FontSize="24" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="todas as ordens" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- OS Abertas -->
+                <Border Grid.Row="1" Grid.Column="0"
+                        BackgroundColor="#f39c12"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="OS Abertas" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelOSAbertas" Text="0"
+                               FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="aguardando atendimento" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- OS Concluídas -->
+                <Border Grid.Row="1" Grid.Column="1"
+                        BackgroundColor="#1a3a5c"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="OS Concluídas" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelOSConcluidas" Text="0"
+                               FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="finalizadas com sucesso" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Clientes -->
+                <Border Grid.Row="2" Grid.Column="0"
+                        BackgroundColor="#8e44ad"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Clientes" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelTotalClientes" Text="0"
+                               FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="cadastrados no sistema" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Estoque Baixo -->
+                <Border Grid.Row="2" Grid.Column="1"
+                        BackgroundColor="#e74c3c"
+                        StrokeShape="RoundRectangle 12" Padding="16">
+                    <VerticalStackLayout>
+                        <Label Text="Estoque Baixo" FontSize="12" TextColor="White" Opacity="0.8"/>
+                        <Label x:Name="LabelEstoqueBaixo" Text="0"
+                               FontSize="32" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="peças abaixo do mínimo" FontSize="11" TextColor="White" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </Border>
+
+            </Grid>
+
+            <!-- Seção: OS por Status -->
+            <Label Text="Ordens por Status"
+                   FontAttributes="Bold" FontSize="16"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"
+                   Margin="0,8,0,0"/>
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Barra: Abertas -->
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Abertas" FontSize="13"/>
+                            <Label x:Name="LabelPctAbertas" Grid.Column="1"
+                                   Text="0%" FontAttributes="Bold" TextColor="#f39c12"/>
+                        </Grid>
+                        <Border HeightRequest="12" StrokeShape="RoundRectangle 6"
+                                BackgroundColor="{AppThemeBinding Light=#eee, Dark=#333}">
+                            <BoxView x:Name="BarraAbertas"
+                                     BackgroundColor="#f39c12"
+                                     HeightRequest="12"
+                                     HorizontalOptions="Start"
+                                     WidthRequest="0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Barra: Em Andamento -->
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Em Andamento" FontSize="13"/>
+                            <Label x:Name="LabelPctAndamento" Grid.Column="1"
+                                   Text="0%" FontAttributes="Bold" TextColor="#2e86c1"/>
+                        </Grid>
+                        <Border HeightRequest="12" StrokeShape="RoundRectangle 6"
+                                BackgroundColor="{AppThemeBinding Light=#eee, Dark=#333}">
+                            <BoxView x:Name="BarraAndamento"
+                                     BackgroundColor="#2e86c1"
+                                     HeightRequest="12"
+                                     HorizontalOptions="Start"
+                                     WidthRequest="0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Barra: Concluídas -->
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Concluídas" FontSize="13"/>
+                            <Label x:Name="LabelPctConcluidas" Grid.Column="1"
+                                   Text="0%" FontAttributes="Bold" TextColor="#27ae60"/>
+                        </Grid>
+                        <Border HeightRequest="12" StrokeShape="RoundRectangle 6"
+                                BackgroundColor="{AppThemeBinding Light=#eee, Dark=#333}">
+                            <BoxView x:Name="BarraConcluidas"
+                                     BackgroundColor="#27ae60"
+                                     HeightRequest="12"
+                                     HorizontalOptions="Start"
+                                     WidthRequest="0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Barra: Canceladas -->
+                    <VerticalStackLayout Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Canceladas" FontSize="13"/>
+                            <Label x:Name="LabelPctCanceladas" Grid.Column="1"
+                                   Text="0%" FontAttributes="Bold" TextColor="#e74c3c"/>
+                        </Grid>
+                        <Border HeightRequest="12" StrokeShape="RoundRectangle 6"
+                                BackgroundColor="{AppThemeBinding Light=#eee, Dark=#333}">
+                            <BoxView x:Name="BarraCanceladas"
+                                     BackgroundColor="#e74c3c"
+                                     HeightRequest="12"
+                                     HorizontalOptions="Start"
+                                     WidthRequest="0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Indicador de carregamento -->
+            <ActivityIndicator x:Name="Carregando"
+                               IsRunning="False" IsVisible="False"
+                               Color="#2e86c1" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

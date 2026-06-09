@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Configuracoes.ConfiguracoesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Configurações">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- Tema -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Tema escuro" FontAttributes="Bold" FontSize="15"/>
+                        <Label Text="Altera a aparência do aplicativo."
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    </VerticalStackLayout>
+                    <Switch x:Name="SwitchTema"
+                            Grid.Column="1"
+                            Toggled="OnTemaToggled"
+                            OnColor="#2e86c1"
+                            VerticalOptions="Center"/>
+                </Grid>
+            </Border>
+
+            <!-- Usuário logado -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Usuário conectado" FontAttributes="Bold" FontSize="15"/>
+                    <Label x:Name="LabelUsuario"
+                           FontSize="14"
+                           TextColor="{AppThemeBinding Light=#2e86c1, Dark=#90caf9}"/>
+                    <Label x:Name="LabelPerfil"
+                           FontSize="12"
+                           TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Última pesquisa salva -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Última pesquisa" FontAttributes="Bold" FontSize="15"/>
+                    <Label x:Name="LabelUltimaBusca"
+                           FontSize="13"
+                           TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    <Button Text="Limpar histórico"
+                            Clicked="OnLimparHistoricoClicked"
+                            BackgroundColor="Transparent"
+                            TextColor="#e74c3c"
+                            FontSize="13"
+                            HorizontalOptions="Start"
+                            Padding="0"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Botão sair -->
+            <Button Text="Sair do sistema"
+                    Clicked="OnSairClicked"
+                    BackgroundColor="#e74c3c"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    CornerRadius="10"
+                    HeightRequest="50"
+                    Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

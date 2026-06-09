@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Ordens.OrdemFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Ordem de Serviço">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+
+            <!-- ── Seção 1: Cliente e Veículo ──────────────────────────── -->
+            <Label Text="1. Cliente e Veículo"
+                   FontAttributes="Bold" FontSize="16"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="14">
+
+                    <!-- Picker de cliente -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Cliente *" FontAttributes="Bold" FontSize="13"/>
+                        <Border StrokeShape="RoundRectangle 8" Stroke="#ccc">
+                            <Picker x:Name="PickerCliente"
+                                    Title="Selecione o cliente"
+                                    SelectedIndexChanged="OnClienteSelecionado"
+                                    Margin="12,0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Picker de veículo — só habilita após cliente selecionado -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Veículo *" FontAttributes="Bold" FontSize="13"/>
+                        <Border StrokeShape="RoundRectangle 8" Stroke="#ccc">
+                            <Picker x:Name="PickerVeiculo"
+                                    Title="Selecione o veículo"
+                                    IsEnabled="False"
+                                    Margin="12,0"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Quilometragem e data de abertura -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Quilometragem" FontAttributes="Bold" FontSize="13"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#ccc">
+                                <Entry x:Name="EntryKm"
+                                       Placeholder="Ex: 50000"
+                                       Keyboard="Numeric"
+                                       Margin="12,0"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Previsão" FontAttributes="Bold" FontSize="13"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#ccc">
+                                <DatePicker x:Name="DatePrevisao" Format="dd/MM/yyyy"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ── Seção 2: Serviços ───────────────────────────────────── -->
+            <Label Text="2. Serviços"
+                   FontAttributes="Bold" FontSize="16"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <!-- Busca e adiciona serviço -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Picker x:Name="PickerServico"
+                                Grid.Column="0"
+                                Title="Selecionar serviço"/>
+                        <Button Grid.Column="1"
+                                Text="+ Add"
+                                Clicked="OnAdicionarServicoClicked"
+                                BackgroundColor="#27ae60"
+                                TextColor="White"
+                                CornerRadius="8"
+                                WidthRequest="70"
+                                HeightRequest="44"/>
+                    </Grid>
+
+                    <!-- Lista dos serviços adicionados -->
+                    <CollectionView x:Name="ListaServicosAdicionados"
+                                    HeightRequest="160"
+                                    EmptyView="Nenhum serviço adicionado.">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto,Auto"
+                                      Padding="4,6" ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Servico.Descricao}"
+                                           FontSize="13"
+                                           VerticalOptions="Center"/>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding PrecoUnitario, StringFormat='R$ {0:F2}'}"
+                                           FontSize="13" FontAttributes="Bold"
+                                           TextColor="#2e86c1"
+                                           VerticalOptions="Center"/>
+                                    <Button Grid.Column="2"
+                                            Text="✕"
+                                            FontSize="12"
+                                            BackgroundColor="#e74c3c"
+                                            TextColor="White"
+                                            CornerRadius="4"
+                                            WidthRequest="32"
+                                            HeightRequest="32"
+                                            Padding="0"
+                                            Clicked="OnRemoverServicoClicked"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ── Seção 3: Peças ──────────────────────────────────────── -->
+            <Label Text="3. Peças"
+                   FontAttributes="Bold" FontSize="16"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                        <Picker x:Name="PickerPeca"
+                                Grid.Column="0"
+                                Title="Selecionar peça"/>
+                        <Button Grid.Column="1"
+                                Text="+ Add"
+                                Clicked="OnAdicionarPecaClicked"
+                                BackgroundColor="#27ae60"
+                                TextColor="White"
+                                CornerRadius="8"
+                                WidthRequest="70"
+                                HeightRequest="44"/>
+                    </Grid>
+
+                    <CollectionView x:Name="ListaPecasAdicionadas"
+                                    HeightRequest="160"
+                                    EmptyView="Nenhuma peça adicionada.">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,Auto,Auto"
+                                      Padding="4,6" ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Peca.Descricao}"
+                                           FontSize="13"
+                                           VerticalOptions="Center"/>
+                                    <Label Grid.Column="1"
+                                           Text="{Binding PrecoUnitario, StringFormat='R$ {0:F2}'}"
+                                           FontSize="13" FontAttributes="Bold"
+                                           TextColor="#2e86c1"
+                                           VerticalOptions="Center"/>
+                                    <Button Grid.Column="2"
+                                            Text="✕"
+                                            FontSize="12"
+                                            BackgroundColor="#e74c3c"
+                                            TextColor="White"
+                                            CornerRadius="4"
+                                            WidthRequest="32"
+                                            HeightRequest="32"
+                                            Padding="0"
+                                            Clicked="OnRemoverPecaClicked"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ── Seção 4: Resumo financeiro ─────────────────────────── -->
+            <Border BackgroundColor="{AppThemeBinding Light=#e8f4fd, Dark=#1a3050}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto"
+                      RowSpacing="8">
+
+                    <Label Grid.Row="0" Grid.Column="0" Text="Subtotal serviços:" FontSize="13"/>
+                    <Label Grid.Row="0" Grid.Column="1" x:Name="LabelSubtotalServicos"
+                           Text="R$ 0,00" FontSize="13" FontAttributes="Bold"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Text="Subtotal peças:" FontSize="13"/>
+                    <Label Grid.Row="1" Grid.Column="1" x:Name="LabelSubtotalPecas"
+                           Text="R$ 0,00" FontSize="13" FontAttributes="Bold"/>
+
+                    <!-- Campo de desconto editável -->
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Text="Desconto (R$):" FontSize="13"
+                           VerticalOptions="Center"/>
+                    <Entry Grid.Row="2" Grid.Column="1"
+                           x:Name="EntryDesconto"
+                           Text="0,00"
+                           Keyboard="Numeric"
+                           WidthRequest="90"
+                           HorizontalTextAlignment="End"
+                           TextChanged="OnDescontoChanged"/>
+
+                    <BoxView Grid.Row="3" Grid.ColumnSpan="2"
+                             HeightRequest="1" Color="#2e86c1" Margin="0,4"/>
+
+                    <Label Grid.Row="3" Grid.Column="0"
+                           Text="TOTAL:" FontAttributes="Bold" FontSize="16"/>
+                    <Label Grid.Row="3" Grid.Column="1"
+                           x:Name="LabelTotal"
+                           Text="R$ 0,00"
+                           FontAttributes="Bold" FontSize="18"
+                           TextColor="#2e86c1"/>
+                </Grid>
+            </Border>
+
+            <!-- ── Observações ─────────────────────────────────────────── -->
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Observações" FontAttributes="Bold" FontSize="13"/>
+                <Border StrokeShape="RoundRectangle 8" Stroke="#ccc">
+                    <Editor x:Name="EditorObservacoes"
+                            Placeholder="Descreva detalhes sobre o serviço..."
+                            HeightRequest="90"
+                            Margin="12,8"/>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Mensagem de erro -->
+            <Label x:Name="LabelErro"
+                   TextColor="#e74c3c"
+                   FontSize="13"
+                   IsVisible="False"/>
+
+            <!-- Botão salvar -->
+            <Button x:Name="BtnSalvar"
+                    Text="Salvar Ordem de Serviço"
+                    Clicked="OnSalvarClicked"
+                    BackgroundColor="#2e86c1"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    HeightRequest="54"
+                    CornerRadius="10"
+                    FontSize="15"/>
+
+            <ActivityIndicator x:Name="Carregando"
+                               IsRunning="False" IsVisible="False"
+                               Color="#2e86c1" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

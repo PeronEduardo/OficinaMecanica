@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Clientes.ClientesListaPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Clientes">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Barra de pesquisa e botão novo -->
+        <Grid
+            Grid.Row="0"
+            Padding="16,12"
+            ColumnDefinitions="*,Auto"
+            BackgroundColor="{AppThemeBinding Light=#f0f4f8, Dark=#1a1a2e}">
+
+            <SearchBar
+                x:Name="SearchCliente"
+                Grid.Column="0"
+                Placeholder="Buscar por nome..."
+                SearchCommand="{Binding BuscarCommand}"
+                TextChanged="OnSearchTextChanged"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"/>
+
+            <Button
+                Grid.Column="1"
+                Text="+ Novo"
+                Clicked="OnNovoClicked"
+                BackgroundColor="#2e86c1"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                Margin="8,0,0,0"
+                Padding="12,0"
+                HeightRequest="44"/>
+        </Grid>
+
+        <!-- Lista de clientes -->
+        <RefreshView
+            Grid.Row="1"
+            x:Name="RefreshClientes"
+            Refreshing="OnRefreshing">
+
+            <CollectionView
+                x:Name="ListaClientes"
+                SelectionMode="None"
+                EmptyView="Nenhum cliente encontrado.">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Card de cada cliente na lista -->
+                        <SwipeView>
+
+                            <!-- Ação de deslizar para a esquerda: editar e excluir -->
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        Text="Editar"
+                                        BackgroundColor="#2e86c1"
+                                        IconImageSource="icon_edit.png"
+                                        Invoked="OnEditarSwipe"/>
+                                    <SwipeItem
+                                        Text="Excluir"
+                                        BackgroundColor="#e74c3c"
+                                        IconImageSource="icon_delete.png"
+                                        Invoked="OnExcluirSwipe"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <!-- Conteúdo do card -->
+                            <Border
+                                Margin="16,4"
+                                Padding="16"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                                StrokeShape="RoundRectangle 10"
+                                Stroke="{AppThemeBinding Light=#e0e0e0, Dark=#444}">
+
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+
+                                    <!-- Ícone avatar com inicial do nome -->
+                                    <Border
+                                        Grid.Column="0"
+                                        BackgroundColor="#2e86c1"
+                                        StrokeShape="RoundRectangle 24"
+                                        WidthRequest="48"
+                                        HeightRequest="48"
+                                        Margin="0,0,12,0">
+                                        <Label
+                                            Text="{Binding Nome, Converter={StaticResource InicialConverter}}"
+                                            TextColor="White"
+                                            FontAttributes="Bold"
+                                            FontSize="18"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <!-- Dados do cliente -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                        <Label
+                                            Text="{Binding Nome}"
+                                            FontAttributes="Bold"
+                                            FontSize="15"
+                                            TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+                                        <Label
+                                            Text="{Binding CpfCnpj}"
+                                            FontSize="12"
+                                            TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                                        <Label
+                                            Text="{Binding Telefone}"
+                                            FontSize="12"
+                                            TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Seta indicando que é clicável -->
+                                    <Label
+                                        Grid.Column="2"
+                                        Text="›"
+                                        FontSize="24"
+                                        TextColor="{AppThemeBinding Light=#aaa, Dark=#666}"
+                                        VerticalOptions="Center"/>
+                                </Grid>
+
+                                <!-- Gesture para tocar no card inteiro -->
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnClienteTapped"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+</ContentPage>

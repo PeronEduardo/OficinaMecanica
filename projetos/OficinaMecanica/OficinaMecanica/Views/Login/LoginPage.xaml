@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Login.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="{AppThemeBinding Light=#f0f4f8, Dark=#1a1a2e}">
+
+    <!-- ScrollView garante que em telas pequenas o conteúdo não fica cortado -->
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="40,60,40,40"
+            Spacing="0"
+            VerticalOptions="Center">
+
+            <!-- Logo e título do sistema -->
+            <Image
+                Source="logo_oficina.png"
+                HeightRequest="90"
+                HorizontalOptions="Center"
+                Margin="0,0,0,16"/>
+
+            <Label
+                Text="Oficina Mecânica"
+                FontSize="26"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <Label
+                Text="Sistema de Gestão"
+                FontSize="14"
+                HorizontalOptions="Center"
+                TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"
+                Margin="0,0,0,40"/>
+
+            <!-- Card de login -->
+            <Border
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                StrokeShape="RoundRectangle 16"
+                Stroke="{AppThemeBinding Light=#ddd, Dark=#444}"
+                Padding="24">
+
+                <VerticalStackLayout Spacing="16">
+
+                    <!-- Campo de login -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Login" FontSize="13" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#333, Dark=#ccc}"/>
+                        <Border StrokeShape="RoundRectangle 8"
+                                Stroke="{AppThemeBinding Light=#ccc, Dark=#555}"
+                                BackgroundColor="{AppThemeBinding Light=#f9f9f9, Dark=#333}">
+                            <Entry
+                                x:Name="EntryLogin"
+                                Placeholder="Digite seu login"
+                                ReturnType="Next"
+                                Margin="12,0"
+                                FontSize="15"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Campo de senha -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Senha" FontSize="13" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#333, Dark=#ccc}"/>
+                        <Border StrokeShape="RoundRectangle 8"
+                                Stroke="{AppThemeBinding Light=#ccc, Dark=#555}"
+                                BackgroundColor="{AppThemeBinding Light=#f9f9f9, Dark=#333}">
+                            <Entry
+                                x:Name="EntrySenha"
+                                Placeholder="Digite sua senha"
+                                IsPassword="True"
+                                ReturnType="Done"
+                                ReturnCommand="{Binding EntrarCommand}"
+                                Margin="12,0"
+                                FontSize="15"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Mensagem de erro (visível só quando há erro) -->
+                    <Label
+                        x:Name="LabelErro"
+                        TextColor="#e74c3c"
+                        FontSize="13"
+                        IsVisible="False"
+                        HorizontalOptions="Center"/>
+
+                    <!-- Botão entrar -->
+                    <Button
+                        x:Name="BtnEntrar"
+                        Text="Entrar"
+                        Clicked="OnEntrarClicked"
+                        BackgroundColor="#2e86c1"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="10"
+                        Margin="0,8,0,0"/>
+
+                    <!-- Indicador de carregamento -->
+                    <ActivityIndicator
+                        x:Name="Carregando"
+                        IsRunning="False"
+                        IsVisible="False"
+                        Color="#2e86c1"
+                        HorizontalOptions="Center"/>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Versão do sistema -->
+            <Label
+                Text="v1.0.0 — Programação III"
+                FontSize="11"
+                HorizontalOptions="Center"
+                TextColor="{AppThemeBinding Light=#aaa, Dark=#666}"
+                Margin="0,24,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

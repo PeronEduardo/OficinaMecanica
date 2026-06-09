@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Relatorios.RelatoriosPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Relatórios e Exportações">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="24">
+
+            <!-- Seção: Relatórios PDF -->
+            <Label Text="Relatórios em PDF" FontAttributes="Bold" FontSize="18"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <!-- Relatório de OS por período -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Ordens de Serviço por Período" FontAttributes="Bold" FontSize="14"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Data inicial" FontSize="12"/>
+                            <DatePicker x:Name="DateInicio" Format="dd/MM/yyyy"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Data final" FontSize="12"/>
+                            <DatePicker x:Name="DateFim" Format="dd/MM/yyyy"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Button Text="Gerar PDF de Ordens"
+                            Clicked="OnPdfOrdensClicked"
+                            BackgroundColor="#2e86c1"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="44"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Relatório de Clientes -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Lista de Clientes" FontAttributes="Bold" FontSize="14"/>
+                    <Label Text="Gera PDF com todos os clientes cadastrados."
+                           FontSize="12" TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    <Button Text="Gerar PDF de Clientes"
+                            Clicked="OnPdfClientesClicked"
+                            BackgroundColor="#27ae60"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="44"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Divisor -->
+            <BoxView HeightRequest="1" Color="{AppThemeBinding Light=#eee, Dark=#444}"/>
+
+            <!-- Seção: Exportações -->
+            <Label Text="Exportações" FontAttributes="Bold" FontSize="18"
+                   TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"/>
+
+            <!-- Exportar JSON -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Exportar dados em JSON" FontAttributes="Bold" FontSize="14"/>
+                    <Label Text="Exporta clientes, veículos, serviços e peças para um arquivo .json."
+                           FontSize="12" TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    <Button Text="Exportar JSON"
+                            Clicked="OnExportarJsonClicked"
+                            BackgroundColor="#f39c12"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="44"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Importar JSON -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Importar dados de JSON" FontAttributes="Bold" FontSize="14"/>
+                    <Label Text="Selecione um arquivo .json para importar dados para o banco."
+                           FontSize="12" TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    <Button Text="Importar JSON"
+                            Clicked="OnImportarJsonClicked"
+                            BackgroundColor="#8e44ad"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="44"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Exportar Logs XML -->
+            <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                    StrokeShape="RoundRectangle 12" Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Exportar Logs do Sistema em XML" FontAttributes="Bold" FontSize="14"/>
+                    <Label Text="Gera arquivo .xml com todos os logs registrados no MongoDB."
+                           FontSize="12" TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"/>
+                    <Button Text="Exportar Logs XML"
+                            Clicked="OnExportarXmlClicked"
+                            BackgroundColor="#e74c3c"
+                            TextColor="White"
+                            CornerRadius="8"
+                            HeightRequest="44"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Indicador de carregamento global -->
+            <ActivityIndicator x:Name="Carregando"
+                               IsRunning="False" IsVisible="False"
+                               Color="#2e86c1" HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

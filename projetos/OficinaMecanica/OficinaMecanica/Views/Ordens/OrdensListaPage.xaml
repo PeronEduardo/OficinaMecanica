@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="OficinaMecanica.Views.Ordens.OrdensListaPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Ordens de Serviço">
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        <!-- Filtro por status -->
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+            <HorizontalStackLayout Padding="16,10" Spacing="8">
+                <Button Text="Todas"      Clicked="OnFiltroClicked" CommandParameter="todos"
+                        BackgroundColor="#2e86c1" TextColor="White" CornerRadius="8" Padding="12,6"/>
+                <Button Text="Abertas"    Clicked="OnFiltroClicked" CommandParameter="aberta"
+                        BackgroundColor="#555" TextColor="White" CornerRadius="8" Padding="12,6"/>
+                <Button Text="Andamento"  Clicked="OnFiltroClicked" CommandParameter="em_andamento"
+                        BackgroundColor="#555" TextColor="White" CornerRadius="8" Padding="12,6"/>
+                <Button Text="Concluídas" Clicked="OnFiltroClicked" CommandParameter="concluida"
+                        BackgroundColor="#555" TextColor="White" CornerRadius="8" Padding="12,6"/>
+                <Button Text="Canceladas" Clicked="OnFiltroClicked" CommandParameter="cancelada"
+                        BackgroundColor="#555" TextColor="White" CornerRadius="8" Padding="12,6"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <!-- Botão nova OS -->
+        <Button Grid.Row="1"
+                Text="+ Nova Ordem de Serviço"
+                Clicked="OnNovaOrdemClicked"
+                BackgroundColor="#2e86c1"
+                TextColor="White"
+                FontAttributes="Bold"
+                CornerRadius="8"
+                Margin="16,0,16,8"
+                HeightRequest="44"/>
+
+        <!-- Lista de OS -->
+        <RefreshView Grid.Row="2" x:Name="RefreshOrdens" Refreshing="OnRefreshing">
+            <CollectionView x:Name="ListaOrdens" SelectionMode="None"
+                            EmptyView="Nenhuma ordem encontrada.">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Ver"    BackgroundColor="#2e86c1" Invoked="OnVerSwipe"/>
+                                    <SwipeItem Text="Excluir" BackgroundColor="#e74c3c" Invoked="OnExcluirSwipe"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Border Margin="16,4" Padding="16"
+                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#2a2a3e}"
+                                    StrokeShape="RoundRectangle 10"
+                                    Stroke="{AppThemeBinding Light=#e0e0e0, Dark=#444}">
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                    <!-- OS # -->
+                                    <Label Grid.Row="0" Grid.Column="0"
+                                           FontAttributes="Bold" FontSize="15"
+                                           TextColor="{AppThemeBinding Light=#1a3a5c, Dark=#90caf9}"
+                                           Text="{Binding Id, StringFormat='OS #{0}'}"/>
+
+                                    <!-- Badge status -->
+                                    <Border Grid.Row="0" Grid.Column="1"
+                                            BackgroundColor="#2e86c1"
+                                            StrokeShape="RoundRectangle 12"
+                                            Padding="8,3">
+                                        <Label Text="{Binding Status}"
+                                               FontSize="11" FontAttributes="Bold"
+                                               TextColor="White"/>
+                                    </Border>
+
+                                    <!-- Nome do cliente -->
+                                    <Label Grid.Row="1" Grid.Column="0"
+                                           FontSize="13"
+                                           TextColor="{AppThemeBinding Light=#333, Dark=#ccc}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding ClienteNome}"/>
+
+                                    <!-- Data abertura -->
+                                    <Label Grid.Row="2" Grid.Column="0"
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light=#666, Dark=#aaa}"
+                                           Margin="0,2,0,0"
+                                           Text="{Binding DataAbertura, StringFormat='Aberta em: {0:dd/MM/yyyy}'}"/>
+
+                                    <!-- Total -->
+                                    <Label Grid.Row="1" Grid.Column="1"
+                                           Grid.RowSpan="2"
+                                           FontSize="15" FontAttributes="Bold"
+                                           TextColor="#2e86c1"
+                                           VerticalOptions="Center"
+                                           Text="{Binding Total, StringFormat='R$ {0:F2}'}"/>
+                                </Grid>
+
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnOrdemTapped"/>
+                                </Border.GestureRecognizers>
+                            </Border>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+    </Grid>
+</ContentPage>
